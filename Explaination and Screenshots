@@ -1,0 +1,21 @@
+We are removing any existing table with the name we are going to push i.e. airbnb_ny_2019_raw and airbnb_ny_2019_processed_stage.
+Now we push the raw csv data to airbnb_ny_2019_raw table in SQL.
+
+Now we transform the data, 
+1) Normalize the data
+  -> Host Name is repeating for host id we can create a dimension table to reduce repetetion and perform join to view data when needed, we will remove host_name column from here
+  -> Neighbourhood_group is repeating, we can create dimension table to reduce the repetetion, we will remove neighbourhood_group from here
+  -> calculated_host_listings_count doesnt need to be stored as this can be calculated using the existing data, GROUP BY host_id to find
+
+2) Handle the missing values with default values
+  -> reviews_per_month - 0.0
+  -> last_review - 1990-01-01
+
+3) Calculated Metrics
+  -> Average price per neighbourhood
+  -> Average price per neighbouhood_group
+  -> Average price based on room_type
+  -> Number of listing per neighbourhood
+
+Load the transformed data to final table now: 
+We are using a stage table to eliminate chance of failure, incase there is failure we have the old data. 
